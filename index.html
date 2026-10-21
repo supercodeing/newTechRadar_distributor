@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android 技术雷达 - APK 下载</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container { max-width: 500px; width: 100%; }
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        .logo { font-size: 48px; margin-bottom: 10px; }
+        h1 { color: #333; font-size: 26px; margin-bottom: 8px; }
+        .version { color: #667eea; font-size: 16px; font-weight: 600; margin-bottom: 30px; }
+        .qr-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        #qrcode canvas { display: block; }
+        .download-section { margin-top: 30px; }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 48px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+        .info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            color: #888;
+            line-height: 1.6;
+        }
+        .loading { color: #999; font-size: 14px; padding: 20px; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo">📡</div>
+            <h1>Android 技术雷达</h1>
+            <div class="version" id="version">加载中...</div>
+            
+            <div class="qr-container">
+                <div id="qrcode">
+                    <div class="loading">正在生成二维码...</div>
+                </div>
+            </div>
+            
+            <div class="download-section">
+                <a href="#" id="download-link" class="download-btn">下载 APK</a>
+            </div>
+            
+            <div class="info">
+                <p>📱 扫描二维码或点击按钮下载</p>
+                <p> 构建时间：<span id="build-time">--</span></p>
+                <p> 版本：<span id="apk-version">--</span></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const APK_URL = 'https://supercodeing.github.io/newTechRadar_distributor/releases/latest.apk';
+        const VERSION = '20261021-054908';
+        
+        document.getElementById('build-time').textContent = new Date().toLocaleString('zh-CN');
+        document.getElementById('apk-version').textContent = VERSION;
+        document.getElementById('version').textContent = '版本 ' + VERSION;
+        document.getElementById('download-link').href = APK_URL;
+        
+        QRCode.toCanvas(document.createElement('canvas'), APK_URL, {
+            width: 220,
+            margin: 2,
+            color: { dark: '#667eea', light: '#ffffff' }
+        }, function (error, canvas) {
+            if (!error) {
+                document.getElementById('qrcode').innerHTML = '';
+                document.getElementById('qrcode').appendChild(canvas);
+            }
+        });
+    </script>
+</body>
+</html>
