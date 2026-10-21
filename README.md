@@ -1,0 +1,2 @@
+# newTechRadar_distributor
+用于作为NewTechRadar项目的CI分发public仓库，存储apk和提供pages用于对外提供二维码下载以便手机端及时扫码下载新apk
