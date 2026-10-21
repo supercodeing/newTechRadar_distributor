@@ -34,7 +34,7 @@
             margin: 20px 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        #qrcode canvas { display: block; }
+        #qrcode canvas, #qrcode img { display: block; margin: 0 auto; }
         .download-section { margin-top: 30px; }
         .download-btn {
             display: inline-block;
@@ -62,7 +62,7 @@
         }
         .loading { color: #999; font-size: 14px; padding: 20px; }
     </style>
-    <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -91,33 +91,23 @@
     
     <script>
         const APK_URL = 'https://supercodeing.github.io/newTechRadar_distributor/releases/latest.apk';
-        const VERSION = '1.0.1';
+        const VERSION = '20261021-070852';
         
         document.getElementById('build-time').textContent = new Date().toLocaleString('zh-CN');
         document.getElementById('apk-version').textContent = VERSION;
         document.getElementById('version').textContent = '版本 ' + VERSION;
         document.getElementById('download-link').href = APK_URL;
         
-        // 等待 QRCode 库加载完成
-        function generateQR() {
-            if (typeof QRCode === 'undefined') {
-                setTimeout(generateQR, 100);
-                return;
-            }
-            var container = document.getElementById('qrcode');
-            QRCode.toDataURL(APK_URL, {
-                width: 220,
-                margin: 2,
-                color: { dark: '#667eea', light: '#ffffff' }
-            }, function (error, url) {
-                if (error) {
-                    container.innerHTML = '<div class="loading">二维码生成失败: ' + error.message + '</div>';
-                } else {
-                    container.innerHTML = '<img src="' + url + '" alt="QR Code" style="display: block;" />';
-                }
-            });
-        }
-        generateQR();
+        var qrContainer = document.getElementById('qrcode');
+        qrContainer.innerHTML = '';
+        new QRCode(qrContainer, {
+            text: APK_URL,
+            width: 220,
+            height: 220,
+            colorDark: '#667eea',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+        });
     </script>
 </body>
 </html>
